@@ -14,9 +14,9 @@ export function decodedValue(input: Array<string>): number {
     ]);
     input.forEach(el => {
         let amt = myMap.get(el.toLowerCase())
-        if (amt) {
+        if (amt !== undefined) {
             total = Number('' + total + amt)
         }
     })
-    return total
+    return Number(total.toString().slice(0,2))
 }
