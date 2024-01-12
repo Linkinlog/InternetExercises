@@ -1,0 +1,43 @@
+package main
+
+import (
+	"fmt"
+	"slices"
+)
+
+func maxProfit(prices []int) int {
+	// sort low to high,
+	// for each sorted price
+	// if index for lowest is smaller than highest
+	// return highest - lowest
+	sum := 0
+	var sortedPrices []int
+	sortedPrices = append(sortedPrices, prices...)
+
+	slices.Sort(sortedPrices)
+			fmt.Println(prices, sortedPrices)
+
+	lowestIdx := slices.Index[[]int, int](prices, sortedPrices[0])
+	highestIdx := slices.Index[[]int, int](prices, sortedPrices[len(sortedPrices)-1])
+			fmt.Println(highestIdx, lowestIdx)
+
+	if lowestIdx != -1 && highestIdx != -1 {
+		if lowestIdx < highestIdx {
+			fmt.Println("hi", prices[highestIdx] ,prices[lowestIdx])
+			sum = prices[highestIdx] - prices[lowestIdx]
+		} else {
+			prices = prices[:len(prices)-1]
+			sum = maxProfit(prices)
+		}
+	}
+
+	return sum
+}
+
+func main() {
+	if val := maxProfit([]int{7,1,5,3,6,4}); val == 5{
+		fmt.Println("wow")
+	} else {
+		fmt.Println(val)
+	}
+}
