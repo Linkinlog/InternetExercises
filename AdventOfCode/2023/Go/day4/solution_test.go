@@ -107,7 +107,7 @@ func TestOurWinners(t *testing.T) {
 
 	for name, tt := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := tt.game.ourWinners()
+			got := tt.game.winners()
 			if len(got) != len(tt.want) {
 				t.Errorf("len(got) = %v, want %v", len(got), len(tt.want))
 			}

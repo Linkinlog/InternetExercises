@@ -7,11 +7,20 @@ import (
 )
 
 func part1(input []string) int {
+	games := parseGames(input)
 	sum := 0
 
-	for _, s := range input {
-		g := parseGame(s)
-		sum += g.calcPartOneAlgo()
+	for _, g := range games {
+		score := 0
+		for i := 0; i < g.score(); i++ {
+			if score == 0 {
+				score = 1
+				continue
+			}
+			score *= 2
+		}
+
+		sum += score
 	}
 
 	return sum
@@ -22,12 +31,9 @@ func part2(input []string) int {
 
 	for _, g := range games {
 		if g.score() == 0 {
-			continue
+			continue // skip the losers lmao
 		}
 		for i := g.id + 1; i <= g.id+g.score(); i++ {
-			if i > len(games) {
-				break
-			}
 			games[i-1].instances += g.instances
 		}
 	}
@@ -47,11 +53,7 @@ type game struct {
 	instances   int
 }
 
-func (g game) score() int {
-	return len(g.ourWinners())
-}
-
-func (g game) ourWinners() []int {
+func (g game) winners() []int {
 	nums := []int{}
 	for _, num := range g.ourNums {
 		for _, wNum := range g.winningNums {
@@ -64,16 +66,8 @@ func (g game) ourWinners() []int {
 	return nums
 }
 
-func (g game) calcPartOneAlgo() int {
-	winners := g.ourWinners()
-
-	if len(winners) < 1 {
-		return 0
-	}
-
-	// idk but the internet says its faster
-	// TODO learn bitwise
-	return 1 << (len(winners) - 1)
+func (g game) score() int {
+	return len(g.winners())
 }
 
 func parseGames(input []string) []game {
