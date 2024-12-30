@@ -25,12 +25,13 @@ func main() {
 	fmt.Printf("Running part %d...\n", part)
 	start := time.Now()
 
+	inp := strings.NewReader(input)
+
 	if part == 1 {
-		inp := strings.NewReader(input)
 		ans := part1(inp)
 		fmt.Println(ans)
 	} else {
-		ans := part2(strings.Split(input, "\n"))
+		ans := part2(inp)
 		fmt.Println(ans)
 	}
 
